@@ -1,5 +1,5 @@
 function setMessageCount () {
-var messageCount = "0";
+var messageCount = "00000";
 chrome.browserAction.setBadgeText({text: messageCount});
 }
 
