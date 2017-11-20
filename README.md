@@ -1,6 +1,6 @@
 # teamwork-chat-chrome-extension
 
-Development Instructions:
+##Development Instructions:
 
 To test the extension:
 Go to chrome://extensions
