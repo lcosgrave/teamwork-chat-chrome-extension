@@ -5,8 +5,10 @@
   "description": "Displays Teamwork Chat Notifications",
   "version": "1.0",
 
+
+
   "background": {
-    "scripts": ["eventPage.js"],
+    "scripts": ["js/axios.min.js", "eventPage.js"],
     "persistent": false
   },
 
@@ -16,13 +18,11 @@
 
 
   },
-  "content_scripts": [
-    {
-      "axios": ["js/axios.min.js"]
-    }
-  ],
+
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "cookies",
+    "https://digitalcrew.teamwork.com/"
   ]
 }
