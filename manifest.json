@@ -6,7 +6,7 @@
   "version": "1.0",
 
   "background": {
-    "page": "eventPage.html",
+    "scripts": ["eventPage.js"],
     "persistent": false
   },
 
@@ -16,6 +16,11 @@
 
 
   },
+  "content_scripts": [
+    {
+      "axios": ["js/axios.min.js"]
+    }
+  ],
   "permissions": [
     "activeTab",
     "storage"
