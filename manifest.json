@@ -8,7 +8,7 @@
 
 
   "background": {
-    "scripts": ["js/axios.min.js", "eventPage.js"],
+    "scripts": ["lib/axios.min.js", "src/websocket.js", "src/api.js", "src/index.js"],
     "persistent": false
   },
 
@@ -23,6 +23,6 @@
     "activeTab",
     "storage",
     "cookies",
-    "https://digitalcrew.teamwork.com/"
+    "https://chattest.teamwork.com/"
   ]
 }
