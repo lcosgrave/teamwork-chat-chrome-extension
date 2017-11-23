@@ -8,7 +8,7 @@
 
 
   "background": {
-    "scripts": ["lib/axios.min.js", "src/websocket.js", "src/api.js", "src/index.js"],
+    "page": "src/backgroundPage.html",
     "persistent": false
   },
 
@@ -21,6 +21,7 @@
 
   "permissions": [
     "activeTab",
+    "webNavigation",
     "storage",
     "cookies",
     "https://chattest.teamwork.com/"

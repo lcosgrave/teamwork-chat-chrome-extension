@@ -1,0 +1,49 @@
+let canvas = document.getElementById('canvas')
+let canvasContext = canvas.getContext('2d')
+let icon = document.getElementById('icon')
+let numberOfRotations = 0
+let previousImportantUnreads = 0
+
+function updateBadgeCount (importantUnread) {
+  chrome.browserAction.setBadgeText({
+    text: importantUnread.toString()
+  })
+  if (importantUnread > previousImportantUnreads) {
+    rotateIcon()
+    previousImportantUnreads = importantUnread
+  }
+}
+
+function setIcon () {
+  canvasContext.drawImage(icon, 0, 0)
+  chrome.browserAction.setIcon({
+    imageData: canvasContext.getImageData(0, 0, 19, 19)
+  })
+}
+
+function rotateIcon () {
+  let interval = setInterval(function () {
+    numberOfRotations++
+    if (numberOfRotations > 36) {
+      numberOfRotations = 0
+      clearInterval(interval)
+    }
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height)
+    canvasContext.save()
+    canvasContext.translate(canvas.width / 2, canvas.height / 2)
+    canvasContext.rotate(10 * numberOfRotations * (Math.PI / 180))
+    canvasContext.drawImage(icon, -canvas.width / 2, -canvas.width / 2)
+    canvasContext.restore()
+    chrome.browserAction.setIcon({imageData: canvasContext.getImageData(0, 0, canvas.width, canvas.height)})
+  }, 20)
+}
+
+function changeIconOnError () {
+  updateBadgeCount('?')
+  chrome.browserAction.setIcon({
+    path: {
+      '16': '../../res/chat_icon_greyscale.png'
+    }
+  })
+  chrome.tabs.create({ url: 'https://teamwork.com/chat' })
+}

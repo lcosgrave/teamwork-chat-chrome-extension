@@ -6,48 +6,28 @@ function getUserProfile () {
     })
 }
 
-function updateBadgeCount (importantUnread) {
-  chrome.browserAction.setBadgeText({
-    text: importantUnread.toString()
-  })
+function startUp () {
+  setIcon()
+  getUserProfile()
+    .then(function (userProfile) {
+      let unreadMessages = userProfile.account.counts.importantUnread
+      updateBadgeCount(unreadMessages)
+      return userProfile
+    })
+    .then(function (userProfile) {
+      gotAuthKey = userProfile.account.authkey
+      gotUserId = userProfile.account.user.id
+      gotInstallationId = userProfile.account.installationId
+      gotInstallationDomain = userProfile.account.url
+    })
+    .then(function () {
+      startWebsocket()
+      checkWebSocketMessages()
+    })
+    .catch((error) => {
+      console.error(error)
+      changeIconOnError()
+    })
 }
 
-sendAuthenticationResponse = function () {
-  var authenticationResponse = {
-    contentType: 'object',
-    name: 'authentication.response',
-    source: {
-      name: 'Teamwork Chat - Chrome Extension',
-      version: '1.0.0'
-    },
-    contents: {
-      authKey: gotAuthKey,
-      userId: gotUserId,
-      installationId: gotInstallationId,
-      clientVersion: '0.1.0',
-      installationDomain: gotInstallationDomain
-    },
-    nodeId: null,
-    nonce: null,
-    uid: null
-  }
-  chatWebSocket.send(JSON.stringify(authenticationResponse))
-  console.log(authenticationResponse)
-}
 
-ping = function () {
-  var pingObject = { contentType: 'object',
-    name: 'ping',
-    source: {
-      name: 'Teamwork Chat - Chrome Extension',
-      version: '1.0.0'
-    },
-    contents: { },
-    nodeId: null,
-    nonce: pingnonce,
-    uid: null
-  }
-  chatWebSocket.send(JSON.stringify(pingObject))
-  console.log(pingObject)
-  pingnonce++
-}
