@@ -11,7 +11,11 @@
     "page": "src/backgroundPage.html",
     "persistent": false
   },
-
+  "icons": {
+    "16": "res/16x16icon.png",
+    "48": "res/48x48.png",
+    "128": "res/128x128.png"
+  },
   "browser_action": {
     "default_icon": "res/16x16icon.png",
     "default_title": "Teamwork Chat"
