@@ -20,10 +20,11 @@
   },
 
   "permissions": [
-    "activeTab",
+    "tabs",
     "webNavigation",
     "storage",
     "cookies",
-    "https://chattest.teamwork.com/"
+    "history",
+    "*://*.teamwork.com/"
   ]
 }

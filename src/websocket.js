@@ -11,22 +11,39 @@ function startWebsocket () {
   }
 }
 
+function closeWebSocket () {
+  console.log('closing web socket')
+  chatWebSocket.close()
+}
+
+function checkWebSocketOpened () {
+  console.log('back online!')
+  if (!(chatWebSocket.readyState === 0 || chatWebSocket.readyState === 1)) {
+    startUp()
+  }
+}
+
 function checkWebSocketMessages () {
   chatWebSocket.onmessage = function (event) {
     var msg = JSON.parse(event.data)
     console.log(msg)
 
-    if (msg.name == 'authentication.request') {
+    if (msg.name === 'authentication.request') {
       sendAuthenticationResponse()
-    } else if (msg.name == 'authentication.error') {
+    } else if (msg.name === 'authentication.error') {
       chatWebSocket.close()
       changeIconOnError()
-    } else if (msg.name == 'room.user.active' || msg.name == 'room.message.created') {
+    } else if (msg.name === 'room.user.active' || msg.name === 'room.message.created') {
       getUserProfile()
-        .then(function (userProfile) {
-          let unreadMessages = userProfile.account.counts.importantUnread
-          console.log('updating count ' + unreadMessages)
-          ping()
+        .then(function (userInstallation) {
+          let userProfile = userInstallation + '.teamwork.com/chat/v3/me?includeAuth=true'
+          return axios.get(userProfile)
+        })
+        .then(function (response) {
+          return response.data
+        })
+        .then(function (userProfileData) {
+          let unreadMessages = userProfileData.account.counts.importantUnread
           return unreadMessages
         })
         .then(function (unreadMessages) {
@@ -75,7 +92,9 @@ ping = function () {
     nonce: pingnonce,
     uid: null
   }
-  chatWebSocket.send(JSON.stringify(pingObject))
-  console.log(pingObject)
-  pingnonce++
+  if (chatWebSocket.readyState === 1) {
+    chatWebSocket.send(JSON.stringify(pingObject))
+    console.log(pingObject)
+    pingnonce++
+  }
 }

@@ -3,31 +3,35 @@ let gotUserId
 let gotInstallationId
 let gotClientVersion
 let gotInstallationDomain
-let chatWebSocket
+let chatWebSocket = null
 
-chrome.runtime.onStartup.addListener(startUp())
+// chrome.runtime.onStartup.addListener(startUp())
 chrome.browserAction.onClicked.addListener(function () {
-  var newURL = 'http://chattest.teamwork.com/chat'
-  chrome.tabs.create({ url: newURL })
-  rotateIcon()
+  getUserProfile()
+    .then(function (userInstallation) {
+      let newURL = userInstallation + '.teamwork.com/chat'
+      chrome.tabs.create({ url: newURL })
+      rotateIcon()
+    })
 })
 
-chrome.webNavigation.onCommitted.addListener(function(e) {
-    console.log("I recognise this page!");
-        if (chatWebSocket.readyState === 'CLOSED' || chatWebSocket.readyState === 'CLOSING'){
-            startUp();
-            console.log("starting");
-        }
+chrome.webNavigation.onHistoryStateUpdated.addListener(function (e) {
+  console.log('I recognise this page! 2')
 
-      }, {url: [{ urlContains: 'chattest.teamwork.com/chat/people'}, { urlContains: 'chattest.teamwork.com/chat/rooms'}]});
+  if (chatWebSocket === null) {
+    startUp()
+    console.log('starting null websocket')
+  } else if (!(chatWebSocket.readyState === 0 || chatWebSocket.readyState === 1)) {
+    startUp()
+    console.log('starting')
+  }
+}, {url: [{urlContains: '.teamwork.com/chat/people'}, {urlContains: '.teamwork.com/chat/rooms'}]})
 
- chrome.webNavigation.onHistoryStateUpdated.addListener(function(e) {
-       console.log("I recognise this page! 2");
-       console.log(chatWebSocket.readyState);
-                if (chatWebSocket.readyState === 2 || chatWebSocket.readyState === 3){
-                               startUp();
-                               console.log("starting");
-                }
-
- }, {url: [{ urlContains: 'chattest.teamwork.com/chat/people'}, { urlContains: 'chattest.teamwork.com/chat/rooms'}]});
-
+window.addEventListener('offline', function () {
+  console.log('gone offline')
+  closeWebSocket()
+}, false)
+window.addEventListener('online', function () {
+  console.log('back online')
+  checkWebSocketOpened()
+}, false)

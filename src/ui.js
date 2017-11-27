@@ -1,17 +1,16 @@
 let canvas = document.getElementById('canvas')
 let canvasContext = canvas.getContext('2d')
 let icon = document.getElementById('icon')
-let numberOfRotations = 0
-let previousImportantUnreads = 0
+let previousImportantUnread = 0
 
 function updateBadgeCount (importantUnread) {
   chrome.browserAction.setBadgeText({
     text: importantUnread.toString()
   })
-  if (importantUnread > previousImportantUnreads) {
+  if (importantUnread > previousImportantUnread) {
     rotateIcon()
-    previousImportantUnreads = importantUnread
   }
+  previousImportantUnread = importantUnread
 }
 
 function setIcon () {
@@ -22,6 +21,7 @@ function setIcon () {
 }
 
 function rotateIcon () {
+  let numberOfRotations = 0
   let interval = setInterval(function () {
     numberOfRotations++
     if (numberOfRotations > 36) {
