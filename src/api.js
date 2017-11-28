@@ -1,6 +1,5 @@
 let pingnonce = 1
 let userInstallation
-let userProfileFound = false
 
 function getUserProfile () {
   return new Promise((resolve, reject) => {
@@ -10,11 +9,9 @@ function getUserProfile () {
     } else {
       chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
         if (cookie === null) {
-          console.log('no cooookies')
           let userProfile = getUserProfileFromWebAddress()
           resolve(userProfile)
         } else {
-          console.log('cookiiee')
           let userProfile = getUserProfileFromCookie()
           resolve(userProfile)
         }
@@ -36,7 +33,6 @@ function getUserProfileFromWebAddress () {
       })
       .then(function (response) {
         chrome.cookies.set({url: 'https://www.teamwork.com', name: 'userInstallation', value: userInstallation, expirationDate: 2237706996})
-        userProfileFound = true
         resolve(response.data)
       })
       .catch((error) => {
@@ -51,16 +47,13 @@ function getUserProfileFromCookie () {
     getCookie()
       .then(function (cookieValue) {
         userInstallation = cookieValue
-        console.log('got it ' + cookieValue)
         let installationURL = cookieValue + '.teamwork.com/chat/v3/me?includeAuth=true'
         return axios.get(installationURL)
       })
       .then(function (response) {
-        userProfileFound = true
         resolve(response.data)
       })
       .catch((error) => {
-        getUserProfileFromWebAddress()
         console.error(error)
         changeIconOnError()
       })
@@ -85,7 +78,6 @@ function getUserProfileFromVariableHTTPRequest () {
 function getCookie () {
   return new Promise((resolve, reject) => {
     chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
-      console.log(cookie.value)
       resolve(cookie.value)
     })
   })
@@ -95,7 +87,6 @@ function getTab () {
   return new Promise((resolve, reject) => {
     chrome.tabs.query({active: true, lastFocusedWindow: true}, function (tabs) {
       let tab = tabs[0]
-      console.log(tab.url)
       resolve(tab.url)
     })
   })
@@ -105,7 +96,6 @@ function startUp () {
   setIcon()
   getUserProfile()
     .then(function (userProfile) {
-      console.log('user profile: ' + userProfile)
       userProfileFound = true
       let unreadMessages = userProfile.account.counts.importantUnread
       updateBadgeCount(unreadMessages)

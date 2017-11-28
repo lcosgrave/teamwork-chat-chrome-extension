@@ -2,26 +2,22 @@ function startWebsocket () {
   chatWebSocket = new WebSocket('wss://chat-socks.teamwork.com')
   let pingInterval
   chatWebSocket.onopen = function (event) {
-    console.log('web socket opened')
     pingInterval = setInterval(ping, 5000)
   }
   chatWebSocket.onclose = function (event) {
-    console.log('web socket closed')
     clearInterval(pingInterval)
   }
 }
 
 function closeWebSocket () {
-  console.log('closing web socket')
   if (chatWebSocket != null) {
     chatWebSocket.close()
   }
 }
 
 function checkWebSocketOpened () {
-  console.log('back online!')
   if (chatWebSocket === null || !(chatWebSocket.readyState === 0 || chatWebSocket.readyState === 1)) {
-    startUp()
+    setTimeout(function () { startUp() }, 10000)
   }
 }
 
@@ -89,7 +85,6 @@ ping = function () {
   }
   if (chatWebSocket.readyState === 1) {
     chatWebSocket.send(JSON.stringify(pingObject))
-    console.log(pingObject)
     pingnonce++
   }
 }
