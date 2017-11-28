@@ -18,6 +18,9 @@ chrome.runtime.onInstalled.addListener(function () {
     if (cookie != null) {
       startUp()
     }
+    else {
+    changeIconOnError()
+    }
   })
 })
 chrome.browserAction.onClicked.addListener(function () {
@@ -27,7 +30,7 @@ chrome.browserAction.onClicked.addListener(function () {
     rotateIcon()
   } else {
     chrome.tabs.create({ url: 'https://teamwork.com/chat' })
-    rotateIcon()
+    
   }
 })
 
