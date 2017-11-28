@@ -1,31 +1,93 @@
 let pingnonce = 1
-let userProfileFound = false
 let userInstallation
+let userProfileFound = false
+
 function getUserProfile () {
   return new Promise((resolve, reject) => {
-    if (userProfileFound === false) {
-      console.log('user profile found is false')
-      getTab()
-        .then(function (tabURL) {
-          return getInstallationURL(tabURL)
-        })
-        .then(function (installationName) {
-          userInstallation = installationName
-          let installationURL = installationName + '.teamwork.com/chat/v3/me?includeAuth=true'
-          userProfile = installationURL
-          return axios.get(installationURL)
-        })
-        .then(function (response) {
-          resolve(response.data)
-        })
-        .catch((error) => {
-          console.error(error)
-          changeIconOnError()
-        })
+    if (userInstallation != null) {
+      let userProfile = getUserProfileFromVariable()
+      resolve(userProfile)
     } else {
-      console.log(userInstallation)
-      resolve(userInstallation)
+      chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
+        if (cookie === null) {
+          console.log('no cooookies')
+          let userProfile = getUserProfileFromWebAddress()
+          resolve(userProfile)
+        } else {
+          console.log('cookiiee')
+          let userProfile = getUserProfileFromCookie()
+          resolve(userProfile)
+        }
+      })
     }
+  })
+}
+
+function getUserProfileFromWebAddress () {
+  return new Promise((resolve, reject) => {
+    getTab()
+      .then(function (tabURL) {
+        return getInstallationURL(tabURL)
+      })
+      .then(function (installationName) {
+        userInstallation = installationName
+        let installationURL = installationName + '.teamwork.com/chat/v3/me?includeAuth=true'
+        return axios.get(installationURL)
+      })
+      .then(function (response) {
+        chrome.cookies.set({url: 'https://www.teamwork.com', name: 'userInstallation', value: userInstallation, expirationDate: 2237706996})
+        userProfileFound = true
+        resolve(response.data)
+      })
+      .catch((error) => {
+        console.error(error)
+        changeIconOnError()
+      })
+  })
+}
+
+function getUserProfileFromCookie () {
+  return new Promise((resolve, reject) => {
+    getCookie()
+      .then(function (cookieValue) {
+        userInstallation = cookieValue
+        console.log('got it ' + cookieValue)
+        let installationURL = cookieValue + '.teamwork.com/chat/v3/me?includeAuth=true'
+        return axios.get(installationURL)
+      })
+      .then(function (response) {
+        userProfileFound = true
+        resolve(response.data)
+      })
+      .catch((error) => {
+        getUserProfileFromWebAddress()
+        console.error(error)
+        changeIconOnError()
+      })
+  })
+}
+
+function getUserProfileFromVariable () {
+  return new Promise((resolve, reject) => {
+    getUserProfileFromVariableHTTPRequest()
+      .then(function (response) {
+        resolve(response.data)
+      })
+  })
+}
+
+function getUserProfileFromVariableHTTPRequest () {
+  return new Promise((resolve, reject) => {
+    let installationURL = userInstallation + '.teamwork.com/chat/v3/me?includeAuth=true'
+    resolve(axios.get(installationURL))
+  })
+}
+function getCookie () {
+  return new Promise((resolve, reject) => {
+    chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
+      console.log(cookie.value)
+      resolve(cookie.value)
+    })
   })
 }
 
@@ -43,7 +105,7 @@ function startUp () {
   setIcon()
   getUserProfile()
     .then(function (userProfile) {
-      console.log(userProfile)
+      console.log('user profile: ' + userProfile)
       userProfileFound = true
       let unreadMessages = userProfile.account.counts.importantUnread
       updateBadgeCount(unreadMessages)
@@ -66,11 +128,8 @@ function startUp () {
 }
 
 function getInstallationURL (tablink) {
-  console.log(tablink)
   let currentUrl = tablink
   let dotIndex = currentUrl.indexOf('.')
-  console.log(dotIndex)
   let installation = currentUrl.substring(0, dotIndex)
-  console.log(installation)
   return installation
 }

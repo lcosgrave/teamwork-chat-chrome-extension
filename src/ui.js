@@ -45,5 +45,4 @@ function changeIconOnError () {
       '16': '../../res/chat_icon_greyscale.png'
     }
   })
-  chrome.tabs.create({ url: 'https://teamwork.com/chat' })
 }

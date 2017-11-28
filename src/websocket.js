@@ -13,12 +13,14 @@ function startWebsocket () {
 
 function closeWebSocket () {
   console.log('closing web socket')
-  chatWebSocket.close()
+  if (chatWebSocket != null) {
+    chatWebSocket.close()
+  }
 }
 
 function checkWebSocketOpened () {
   console.log('back online!')
-  if (!(chatWebSocket.readyState === 0 || chatWebSocket.readyState === 1)) {
+  if (chatWebSocket === null || !(chatWebSocket.readyState === 0 || chatWebSocket.readyState === 1)) {
     startUp()
   }
 }
@@ -35,13 +37,6 @@ function checkWebSocketMessages () {
       changeIconOnError()
     } else if (msg.name === 'room.user.active' || msg.name === 'room.message.created') {
       getUserProfile()
-        .then(function (userInstallation) {
-          let userProfile = userInstallation + '.teamwork.com/chat/v3/me?includeAuth=true'
-          return axios.get(userProfile)
-        })
-        .then(function (response) {
-          return response.data
-        })
         .then(function (userProfileData) {
           let unreadMessages = userProfileData.account.counts.importantUnread
           return unreadMessages

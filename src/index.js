@@ -5,14 +5,34 @@ let gotClientVersion
 let gotInstallationDomain
 let chatWebSocket = null
 
-// chrome.runtime.onStartup.addListener(startUp())
+chrome.runtime.onStartup.addListener(function () {
+  console.log('starting up')
+  chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
+    if (cookie != null) {
+      console.log('cookies found')
+      startUp()
+    }
+  })
+})
+
+chrome.runtime.onInstalled.addListener(function () {
+  console.log('installing')
+  chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
+    if (cookie != null) {
+      console.log('cookies found')
+      startUp()
+    }
+  })
+})
 chrome.browserAction.onClicked.addListener(function () {
-  getUserProfile()
-    .then(function (userInstallation) {
-      let newURL = userInstallation + '.teamwork.com/chat'
-      chrome.tabs.create({ url: newURL })
-      rotateIcon()
-    })
+  if (userInstallation != null) {
+    let newURL = userInstallation + '.teamwork.com/chat'
+    chrome.tabs.create({ url: newURL })
+    rotateIcon()
+  } else {
+    chrome.tabs.create({ url: 'https://teamwork.com/chat' })
+    rotateIcon()
+  }
 })
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (e) {
@@ -30,6 +50,7 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(function (e) {
 window.addEventListener('offline', function () {
   console.log('gone offline')
   closeWebSocket()
+  changeIconOnError()
 }, false)
 window.addEventListener('online', function () {
   console.log('back online')
