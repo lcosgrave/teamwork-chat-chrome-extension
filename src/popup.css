@@ -24,3 +24,7 @@ p {
      border: none;
 
 }
+
+#avatar {
+    border-radius: 50%;
+}
