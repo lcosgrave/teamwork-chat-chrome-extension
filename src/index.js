@@ -17,22 +17,21 @@ chrome.runtime.onInstalled.addListener(function () {
   chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
     if (cookie != null) {
       startUp()
-    }
-    else {
-    changeIconOnError()
+    } else {
+      changeIconOnError()
     }
   })
 })
-chrome.browserAction.onClicked.addListener(function () {
-  if (userInstallation != null) {
-    let newURL = userInstallation + '.teamwork.com/chat'
-    chrome.tabs.create({ url: newURL })
-    rotateIcon()
-  } else {
-    chrome.tabs.create({ url: 'https://teamwork.com/chat' })
-    
-  }
-})
+// chrome.browserAction.onClicked.addListener(function () {
+//  if (userInstallation != null) {
+//    let newURL = userInstallation + '.teamwork.com/chat'
+//    chrome.tabs.create({ url: newURL })
+//    rotateIcon()
+//  } else {
+//    chrome.tabs.create({ url: 'https://teamwork.com/chat' })
+//
+//  }
+// })
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (e) {
   if (chatWebSocket === null) {

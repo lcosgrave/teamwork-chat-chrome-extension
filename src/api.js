@@ -7,12 +7,12 @@ function getUserProfile () {
       let userProfile = getUserProfileFromVariable()
       resolve(userProfile)
     } else {
-      chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
-        if (cookie === null) {
+      chrome.storage.local.get('userInstallation', function (data) {
+        if (data.userInstallation == null) {
           let userProfile = getUserProfileFromWebAddress()
           resolve(userProfile)
         } else {
-          let userProfile = getUserProfileFromCookie()
+          let userProfile = getUserProfileFromLocalStorage()
           resolve(userProfile)
         }
       })
@@ -32,22 +32,23 @@ function getUserProfileFromWebAddress () {
         return axios.get(installationURL)
       })
       .then(function (response) {
-        chrome.cookies.set({url: 'https://www.teamwork.com', name: 'userInstallation', value: userInstallation, expirationDate: 2237706996})
+        chrome.storage.local.set({userInstallation: userInstallation})
         resolve(response.data)
       })
       .catch((error) => {
         console.error(error)
         changeIconOnError()
+        userInstallation = null
       })
   })
 }
 
-function getUserProfileFromCookie () {
+function getUserProfileFromLocalStorage () {
   return new Promise((resolve, reject) => {
-    getCookie()
-      .then(function (cookieValue) {
-        userInstallation = cookieValue
-        let installationURL = cookieValue + '.teamwork.com/chat/v3/me?includeAuth=true'
+    getLocallyStoredProfile()
+      .then(function (installation) {
+        userInstallation = installation
+        let installationURL = userInstallation + '.teamwork.com/chat/v3/me?includeAuth=true'
         return axios.get(installationURL)
       })
       .then(function (response) {
@@ -75,10 +76,10 @@ function getUserProfileFromVariableHTTPRequest () {
     resolve(axios.get(installationURL))
   })
 }
-function getCookie () {
+function getLocallyStoredProfile () {
   return new Promise((resolve, reject) => {
-    chrome.cookies.get({url: 'https://www.teamwork.com', name: 'userInstallation'}, function (cookie) {
-      resolve(cookie.value)
+    chrome.storage.local.get('userInstallation', function (data) {
+      resolve(data.userInstallation)
     })
   })
 }
@@ -106,10 +107,23 @@ function startUp () {
       gotUserId = userProfile.account.user.id
       gotInstallationId = userProfile.account.installationId
       gotInstallationDomain = userProfile.account.url
+      let userName = userProfile.account.user.firstName + ' ' + userProfile.account.user.lastName
+      chrome.storage.local.set({userName: userName})
+      let userCompany = userProfile.account.user.company.name
+      chrome.storage.local.set({userCompany: userCompany})
+      let userTitle = userProfile.account.user.title
+      chrome.storage.local.set({userTitle: userTitle})
+      let userHandle = userProfile.account.user.handle
+      chrome.storage.local.set({userHandle: '@' + userHandle})
+      let userAvatar = userProfile.account.user.avatar
+      chrome.storage.local.set({userAvatar: userAvatar})
     })
     .then(function () {
       startWebsocket()
       checkWebSocketMessages()
+    })
+    .then(function () {
+      chrome.browserAction.setPopup({ popup: 'src/loggedinpopup.html' })
     })
     .catch((error) => {
       console.error(error)

@@ -18,8 +18,8 @@
   },
   "browser_action": {
     "default_icon": "res/16x16icon.png",
-    "default_title": "Teamwork Chat"
-
+    "default_title": "Teamwork Chat",
+    "default_popup": "src/notloggedinpopup.html"
 
   },
 
@@ -28,7 +28,6 @@
     "webNavigation",
     "storage",
     "cookies",
-    "history",
     "*://*.teamwork.com/"
   ]
 }
