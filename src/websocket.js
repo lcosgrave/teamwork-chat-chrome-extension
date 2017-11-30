@@ -12,6 +12,8 @@ function startWebsocket () {
 function closeWebSocket () {
   if (chatWebSocket != null) {
     chatWebSocket.close()
+    changeIconOnError()
+    console.log("closing web socket")
   }
 }
 

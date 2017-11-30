@@ -35,5 +35,8 @@ document.getElementById('logoutbutton').onclick = function () {
     .then(function (installationURL) {
         let logoutURL = installationURL + '.teamwork.com/launchpad/v1/logout.json'
         axios.put(logoutURL)
+    .then(function() {
+        chrome.runtime.sendMessage({loginStatus: "logged out"})
+    })
     })
 }

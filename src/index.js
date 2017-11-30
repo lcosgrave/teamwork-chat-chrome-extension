@@ -23,16 +23,12 @@ chrome.runtime.onInstalled.addListener(function () {
     }
   })
 })
-// chrome.browserAction.onClicked.addListener(function () {
-//  if (userInstallation != null) {
-//    let newURL = userInstallation + '.teamwork.com/chat'
-//    chrome.tabs.create({ url: newURL })
-//    rotateIcon()
-//  } else {
-//    chrome.tabs.create({ url: 'https://teamwork.com/chat' })
-//
-//  }
-// })
+
+chrome.runtime.onMessage.addListener(function (message) {
+    if(message.loginStatus === "logged out"){
+    closeWebSocket()
+    }
+})
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (e) {
   if (chatWebSocket === null) {

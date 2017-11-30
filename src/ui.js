@@ -40,6 +40,7 @@ function rotateIcon () {
 
 function changeIconOnError () {
   updateBadgeCount('?')
+  chrome.browserAction.setPopup({ popup: 'src/notloggedinpopup.html' })
   chrome.browserAction.setIcon({
     path: {
       '16': '../../res/chat_icon_greyscale.png'
