@@ -30,12 +30,20 @@ function getInstallationURL () {
     })
   })
 }
+document.getElementById('chatlogo').onclick = function () {
+  getInstallationURL()
+    .then(function (installationURL) {
+      chrome.tabs.create({url: installationURL + '.teamwork.com/chat'})
+    })
+}
+
 document.getElementById('gotochatbutton').onclick = function () {
   getInstallationURL()
     .then(function (installationURL) {
       chrome.tabs.create({url: installationURL + '.teamwork.com/chat'})
     })
 }
+
 document.getElementById('logoutbutton').onclick = function () {
   console.log('clicked')
   getInstallationURL()
