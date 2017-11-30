@@ -114,8 +114,8 @@ function startUp () {
       chrome.storage.local.set({userCompany: userCompany})
       let userTitle = userProfile.account.user.title
       chrome.storage.local.set({userTitle: userTitle})
-      let userHandle = userProfile.account.user.handle
-      chrome.storage.local.set({userHandle: '@' + userHandle})
+      let userInstallationName = userProfile.account.installationName
+      chrome.storage.local.set({userInstallationName: userInstallationName})
       let userAvatar = userProfile.account.user.avatar
       chrome.storage.local.set({userAvatar: userAvatar})
     })
@@ -142,6 +142,17 @@ function startUp () {
       changeIconOnError()
     })
 }
+
+function clearData () {
+  chrome.storage.local.clear()
+    gotAuthKey = null
+    gotUserId = null
+    gotInstallationId = null
+    gotClientVersion = null
+    gotInstallationDomain = null
+    gotApiKey = null
+    userInstallation = null
+    }
 
 function getInstallationURL (tablink) {
   let currentUrl = tablink

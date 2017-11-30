@@ -7,8 +7,8 @@ chrome.storage.local.get('userCompany', function (data) {
 chrome.storage.local.get('userTitle', function (data) {
   document.getElementById('title').innerHTML = data.userTitle
 })
-chrome.storage.local.get('userHandle', function (data) {
-  document.getElementById('handle').innerHTML = data.userHandle
+chrome.storage.local.get('userInstallationName', function (data) {
+  document.getElementById('installation').innerHTML = data.userInstallationName
 })
 chrome.storage.local.get('userAvatar', function (data) {
   document.getElementById('avatar').src = data.userAvatar

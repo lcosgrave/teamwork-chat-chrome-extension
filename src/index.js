@@ -27,6 +27,7 @@ chrome.runtime.onInstalled.addListener(function () {
 chrome.runtime.onMessage.addListener(function (message) {
     if(message.loginStatus === "logged out"){
     closeWebSocket()
+    clearData()
     }
 })
 
