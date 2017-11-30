@@ -37,6 +37,7 @@ document.getElementById('logoutbutton').onclick = function () {
         axios.put(logoutURL)
     .then(function() {
         chrome.runtime.sendMessage({loginStatus: "logged out"})
+        window.close();
     })
     })
 }
