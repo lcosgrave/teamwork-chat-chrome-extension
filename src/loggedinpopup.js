@@ -17,7 +17,7 @@ chrome.storage.local.get('userAvatar', function (data) {
 function getInstallationURL () {
   return new Promise((resolve, reject) => {
     chrome.storage.local.get('userInstallation', function (data) {
-      let installationURL = data.userInstallation + '.teamwork.com/chat'
+      let installationURL = data.userInstallation
       resolve(installationURL)
     })
   })
@@ -26,6 +26,14 @@ document.getElementById('gotochatbutton').onclick = function () {
   console.log('clicked')
   getInstallationURL()
     .then(function (installationURL) {
-      chrome.tabs.create({url: installationURL})
+      chrome.tabs.create({url: installationURL + '.teamwork.com/chat'})
+    })
+}
+document.getElementById('logoutbutton').onclick = function () {
+  console.log('clicked')
+  getInstallationURL()
+    .then(function (installationURL) {
+        let logoutURL = installationURL + '.teamwork.com/launchpad/v1/logout.json'
+        axios.put(logoutURL)
     })
 }

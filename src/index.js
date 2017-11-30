@@ -3,6 +3,7 @@ let gotUserId
 let gotInstallationId
 let gotClientVersion
 let gotInstallationDomain
+let gotApiKey
 let chatWebSocket = null
 
 chrome.runtime.onStartup.addListener(function () {

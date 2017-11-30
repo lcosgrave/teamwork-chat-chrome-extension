@@ -107,6 +107,7 @@ function startUp () {
       gotUserId = userProfile.account.user.id
       gotInstallationId = userProfile.account.installationId
       gotInstallationDomain = userProfile.account.url
+      gotApiKey = userProfile.account.user.apiKey
       let userName = userProfile.account.user.firstName + ' ' + userProfile.account.user.lastName
       chrome.storage.local.set({userName: userName})
       let userCompany = userProfile.account.user.company.name
@@ -119,6 +120,17 @@ function startUp () {
       chrome.storage.local.set({userAvatar: userAvatar})
     })
     .then(function () {
+
+  axios.post('https://authenticate.eu.teamwork.com/launchpad/v1/accounts.json', {
+      email: gotApiKey,
+      password: " "
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+      });
       startWebsocket()
       checkWebSocketMessages()
     })
