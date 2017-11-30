@@ -14,6 +14,7 @@ function updateBadgeCount (importantUnread) {
 }
 
 function setIcon () {
+    chrome.browserAction.setBadgeBackgroundColor({color: '#3B3E4A'})
   canvasContext.drawImage(icon, 0, 0)
   chrome.browserAction.setIcon({
     imageData: canvasContext.getImageData(0, 0, 19, 19)

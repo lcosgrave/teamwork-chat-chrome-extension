@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b4d571dc-7209-4f7a-a4ad-44468c3909b3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/loggedinpopup.html" afterPath="$PROJECT_DIR$/src/loggedinpopup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/loggedinpopup.js" afterPath="$PROJECT_DIR$/src/loggedinpopup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/notloggedinpopup.html" afterPath="$PROJECT_DIR$/src/notloggedinpopup.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/popup.css" afterPath="$PROJECT_DIR$/src/popup.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui.js" afterPath="$PROJECT_DIR$/src/ui.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,18 +18,18 @@
       <file leaf-file-name="ui.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="38" column="1" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="38" selection-end-column="1" />
+            <state relative-caret-position="336">
+              <caret line="16" column="67" lean-forward="false" selection-start-line="16" selection-start-column="67" selection-end-line="16" selection-end-column="67" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loggedinpopup.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="loggedinpopup.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/loggedinpopup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="588">
+              <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -47,11 +45,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="popup.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="notloggedinpopup.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/notloggedinpopup.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="9" column="47" lean-forward="false" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="popup.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/popup.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="795">
-              <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+            <state relative-caret-position="837">
+              <caret line="47" column="15" lean-forward="false" selection-start-line="47" selection-start-column="15" selection-end-line="47" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -88,15 +96,15 @@
         <option value="$PROJECT_DIR$/src/popup.html" />
         <option value="$PROJECT_DIR$/src/popup.js" />
         <option value="$PROJECT_DIR$/manifest.json" />
-        <option value="$PROJECT_DIR$/src/ui.js" />
         <option value="$PROJECT_DIR$/src/websocket.js" />
         <option value="$PROJECT_DIR$/src/api.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/notloggedinpopup.html" />
         <option value="$PROJECT_DIR$/src/backgroundPage.html" />
-        <option value="$PROJECT_DIR$/src/popup.css" />
         <option value="$PROJECT_DIR$/src/loggedinpopup.html" />
         <option value="$PROJECT_DIR$/src/loggedinpopup.js" />
+        <option value="$PROJECT_DIR$/src/notloggedinpopup.html" />
+        <option value="$PROJECT_DIR$/src/ui.js" />
+        <option value="$PROJECT_DIR$/src/popup.css" />
       </list>
     </option>
   </component>
@@ -624,14 +632,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/notloggedinpopup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="19" lean-forward="false" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/backgroundPage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
@@ -640,10 +640,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/popup.css">
+    <entry file="file://$PROJECT_DIR$/src/notloggedinpopup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+        <state relative-caret-position="189">
+          <caret line="9" column="47" lean-forward="false" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/loggedinpopup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -658,16 +666,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="38" column="1" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="38" selection-end-column="1" />
+        <state relative-caret-position="336">
+          <caret line="16" column="67" lean-forward="false" selection-start-line="16" selection-start-column="67" selection-end-line="16" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/loggedinpopup.js">
+    <entry file="file://$PROJECT_DIR$/src/popup.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="837">
+          <caret line="47" column="15" lean-forward="false" selection-start-line="47" selection-start-column="15" selection-end-line="47" selection-end-column="15" />
           <folding />
         </state>
       </provider>
