@@ -25,7 +25,7 @@ chrome.runtime.onInstalled.addListener(function () {
 })
 
 chrome.runtime.onMessage.addListener(function (message) {
-    if(message.loginStatus === "logged out"){
+    if(message.loginStatus === 'logged out'){
     closeWebSocket()
     clearData()
     }
@@ -34,10 +34,11 @@ chrome.runtime.onMessage.addListener(function (message) {
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (e) {
   if (chatWebSocket === null) {
     startUp()
-  } else if (!(chatWebSocket.readyState === 0 || chatWebSocket.readyState === 1)) {
+  }
+   else if (!(chatWebSocket.readyState === 0 || chatWebSocket.readyState === 1)) {
     startUp()
   }
-}, {url: [{urlContains: '.teamwork.com/chat/people'}, {urlContains: '.teamwork.com/chat/rooms'}]})
+}, {url: [{urlContains: '.teamwork.com/chat/channels'}, {urlContains: '.teamwork.com/chat/people'}]})
 
 window.addEventListener('offline', function () {
   closeWebSocket()

@@ -38,7 +38,7 @@ function getUserProfileFromWebAddress () {
       .catch((error) => {
         console.error(error)
         changeIconOnError()
-        userInstallation = null
+        clearData()
       })
   })
 }
@@ -120,20 +120,9 @@ function startUp () {
       chrome.storage.local.set({userAvatar: userAvatar})
     })
     .then(function () {
-
-  axios.post('https://authenticate.eu.teamwork.com/launchpad/v1/accounts.json', {
-      email: gotApiKey,
-      password: " "
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-        console.log(error);
-      });
-      startWebsocket()
-      checkWebSocketMessages()
-    })
+            startWebsocket()
+            checkWebSocketMessages()
+        })
     .then(function () {
       chrome.browserAction.setPopup({ popup: 'src/loggedinpopup.html' })
     })
